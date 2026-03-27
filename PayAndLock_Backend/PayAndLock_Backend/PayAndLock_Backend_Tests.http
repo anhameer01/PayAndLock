@@ -1,0 +1,500 @@
+@baseUrl = http://localhost:5014
+@token = 
+@adminId = 
+@employeeId = 
+@retailerId = 
+@billingId = 
+
+###
+### AUTH ENDPOINTS
+###
+
+### Register Admin
+POST {{baseUrl}}/api/auth/register-admin
+Content-Type: application/json
+
+{
+  "loginId": "admin@payandlock",
+  "password": "Admin@123"
+}
+
+###
+
+### Login Admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "loginId": "admin@payandlock",
+  "password": "Admin@123"
+}
+
+###
+
+### Login BDM Employee
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "loginId": "rajesh.kumar",
+  "password": "Employee@123"
+}
+
+###
+### EMPLOYEE ENDPOINTS
+###
+
+### Create Employee - BDM
+POST {{baseUrl}}/api/employee
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "fullName": "Rajesh Kumar",
+  "loginId": "rajesh.kumar",
+  "mobile": "9876543210",
+  "password": "Employee@123",
+  "role": "BDM",
+  "address": "123 Main Street",
+  "state": "Maharashtra",
+  "city": "Mumbai",
+  "monthlyTarget": 50,
+  "managerId": null
+}
+
+###
+
+### Create Employee - StateHead
+POST {{baseUrl}}/api/employee
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "fullName": "Priya Singh",
+  "loginId": "priya.singh",
+  "mobile": "8765432109",
+  "password": "Employee@123",
+  "role": "StateHead",
+  "address": "456 Oak Avenue",
+  "state": "Karnataka",
+  "city": "Bangalore",
+  "monthlyTarget": 100,
+  "managerId": null
+}
+
+###
+
+### Create Employee - ASM
+POST {{baseUrl}}/api/employee
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "fullName": "Amit Patel",
+  "loginId": "amit.patel",
+  "mobile": "7654321098",
+  "password": "Employee@123",
+  "role": "ASM",
+  "address": "789 Pine Road",
+  "state": "Gujarat",
+  "city": "Ahmedabad",
+  "monthlyTarget": 75,
+  "managerId": null
+}
+
+###
+
+### Create Employee - BDM 2
+POST {{baseUrl}}/api/employee
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "fullName": "Isha Verma",
+  "loginId": "isha.verma",
+  "mobile": "6543210987",
+  "password": "Employee@123",
+  "role": "BDM",
+  "address": "321 Elm Street",
+  "state": "Delhi",
+  "city": "New Delhi",
+  "monthlyTarget": 40,
+  "managerId": null
+}
+
+###
+
+### Get All Employees
+GET {{baseUrl}}/api/employee
+Authorization: Bearer {{token}}
+
+###
+
+### Get Employee by ID
+GET {{baseUrl}}/api/employee/{{employeeId}}
+Authorization: Bearer {{token}}
+
+###
+
+### Update Employee
+PUT {{baseUrl}}/api/employee/{{employeeId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "fullName": "Rajesh Kumar Singh",
+  "loginId": "rajesh.kumar",
+  "mobile": "9876543210",
+  "password": "Employee@123",
+  "role": "BDM",
+  "address": "123 Main Street, Apt 4B",
+  "state": "Maharashtra",
+  "city": "Mumbai",
+  "monthlyTarget": 60,
+  "managerId": null
+}
+
+###
+### RETAILER ENDPOINTS
+###
+
+### Create Retailer - 1
+POST {{baseUrl}}/api/retailer
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Electronics Plus",
+  "ownerName": "Vikram Sethi",
+  "mobile": "9988776655",
+  "alternateMobile": "9988776654",
+  "address": "Shop No. 5, City mall",
+  "city": "Mumbai",
+  "state": "Maharashtra",
+  "assignedBdmId": "{{employeeId}}",
+  "installDate": "2025-01-15",
+  "status": "Active"
+}
+
+###
+
+### Create Retailer - 2
+POST {{baseUrl}}/api/retailer
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Fashion Hub",
+  "ownerName": "Neha Kapoor",
+  "mobile": "9877665544",
+  "alternateMobile": "9877665543",
+  "address": "A-Block, Market Street",
+  "city": "Bangalore",
+  "state": "Karnataka",
+  "assignedBdmId": "{{employeeId}}",
+  "installDate": "2025-02-01",
+  "status": "Active"
+}
+
+###
+
+### Create Retailer - 3
+POST {{baseUrl}}/api/retailer
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Home Furnishing Co",
+  "ownerName": "Rohan Desai",
+  "mobile": "9966554433",
+  "alternateMobile": "9966554432",
+  "address": "Ground Floor, Rajiv Complex",
+  "city": "Delhi",
+  "state": "Delhi",
+  "assignedBdmId": "{{employeeId}}",
+  "installDate": "2025-01-20",
+  "status": "Active"
+}
+
+###
+
+### Create Retailer - 4
+POST {{baseUrl}}/api/retailer
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Tech World",
+  "ownerName": "Sanjay Mehta",
+  "mobile": "9955443322",
+  "alternateMobile": "9955443321",
+  "address": "Plot 12, Industrial Area",
+  "city": "Ahmedabad",
+  "state": "Gujarat",
+  "assignedBdmId": "{{employeeId}}",
+  "installDate": "2025-02-10",
+  "status": "Active"
+}
+
+###
+
+### Get All Retailers
+GET {{baseUrl}}/api/retailer
+Authorization: Bearer {{token}}
+
+###
+
+### Get All Retailers - Mumbai
+GET {{baseUrl}}/api/retailer?city=Mumbai&state=Maharashtra
+Authorization: Bearer {{token}}
+
+###
+
+### Get All Retailers - With Pagination
+GET {{baseUrl}}/api/retailer?page=1&pageSize=10
+Authorization: Bearer {{token}}
+
+###
+
+### Get All Retailers - Search
+GET {{baseUrl}}/api/retailer?search=Electronics
+Authorization: Bearer {{token}}
+
+###
+
+### Get Retailer by ID
+GET {{baseUrl}}/api/retailer/{{retailerId}}
+Authorization: Bearer {{token}}
+
+###
+
+### Update Retailer
+PUT {{baseUrl}}/api/retailer/{{retailerId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Electronics Plus Premium",
+  "ownerName": "Vikram Sethi",
+  "mobile": "9988776655",
+  "alternateMobile": "9988776654",
+  "address": "Shop No. 5, City mall, Level 2",
+  "city": "Mumbai",
+  "state": "Maharashtra",
+  "status": "Active",
+  "assignedBdmId": "{{employeeId}}"
+}
+
+###
+### VISIT ENDPOINTS
+###
+
+### Create Visit - With Key Sold
+POST {{baseUrl}}/api/visit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Electronics Plus",
+  "ownerName": "Vikram Sethi",
+  "mobile": "9988776655",
+  "alternateMobile": "9988776654",
+  "address": "Shop No. 5, City mall",
+  "city": "Mumbai",
+  "state": "Maharashtra",
+  "remarks": "Customer interested in payment solution",
+  "soldKey": true,
+  "latitude": 19.0760,
+  "longitude": 72.8777
+}
+
+###
+
+### Create Visit - Without Key Sold
+POST {{baseUrl}}/api/visit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Fashion Hub",
+  "ownerName": "Neha Kapoor",
+  "mobile": "9877665544",
+  "alternateMobile": "9877665543",
+  "address": "A-Block, Market Street",
+  "city": "Bangalore",
+  "state": "Karnataka",
+  "remarks": "Owner was not available, will follow up next week",
+  "soldKey": false,
+  "latitude": 12.9716,
+  "longitude": 77.5946
+}
+
+###
+
+### Create Visit - 3
+POST {{baseUrl}}/api/visit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Home Furnishing Co",
+  "ownerName": "Rohan Desai",
+  "mobile": "9966554433",
+  "alternateMobile": "9966554432",
+  "address": "Ground Floor, Rajiv Complex",
+  "city": "Delhi",
+  "state": "Delhi",
+  "remarks": "Installation scheduled for next week",
+  "soldKey": true,
+  "latitude": 28.7041,
+  "longitude": 77.1025
+}
+
+###
+
+### Create Visit - 4
+POST {{baseUrl}}/api/visit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "shopName": "Tech World",
+  "ownerName": "Sanjay Mehta",
+  "mobile": "9955443322",
+  "alternateMobile": "9955443321",
+  "address": "Plot 12, Industrial Area",
+  "city": "Ahmedabad",
+  "state": "Gujarat",
+  "remarks": "Needs more time to make decision",
+  "soldKey": false,
+  "latitude": 23.0225,
+  "longitude": 72.5714
+}
+
+###
+
+### Get All Visits
+GET {{baseUrl}}/api/visit
+Authorization: Bearer {{token}}
+
+###
+
+### Get Visits - By City
+GET {{baseUrl}}/api/visit?city=Mumbai&state=Maharashtra
+Authorization: Bearer {{token}}
+
+###
+
+### Get Visits - By Date Range
+GET {{baseUrl}}/api/visit?fromDate=2025-01-01&toDate=2025-03-24
+Authorization: Bearer {{token}}
+
+###
+
+### Get Visits - With Pagination
+GET {{baseUrl}}/api/visit?page=1&pageSize=20
+Authorization: Bearer {{token}}
+
+###
+### BILLING ENDPOINTS
+###
+
+### Create Billing - 1
+POST {{baseUrl}}/api/billing
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "retailerId": "{{retailerId}}",
+  "shopName": "Electronics Plus",
+  "ownerName": "Vikram Sethi",
+  "mobile": "9988776655",
+  "city": "Mumbai",
+  "state": "Maharashtra",
+  "deviceDetails": "POS Terminal - Model XYZ-2024",
+  "billingAmount": 15999.50,
+  "paymentMode": "Cash",
+  "isRebilling": false
+}
+
+###
+
+### Create Billing - 2
+POST {{baseUrl}}/api/billing
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "retailerId": "{{retailerId}}",
+  "shopName": "Fashion Hub",
+  "ownerName": "Neha Kapoor",
+  "mobile": "9877665544",
+  "city": "Bangalore",
+  "state": "Karnataka",
+  "deviceDetails": "Payment Gateway Setup",
+  "billingAmount": 8999.00,
+  "paymentMode": "Online",
+  "isRebilling": false
+}
+
+###
+
+### Create Billing - 3 (Rebilling)
+POST {{baseUrl}}/api/billing
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "retailerId": "{{retailerId}}",
+  "shopName": "Home Furnishing Co",
+  "ownerName": "Rohan Desai",
+  "mobile": "9966554433",
+  "city": "Delhi",
+  "state": "Delhi",
+  "deviceDetails": "Annual Maintenance & Support",
+  "billingAmount": 2999.99,
+  "paymentMode": "Check",
+  "isRebilling": true
+}
+
+###
+
+### Create Billing - 4
+POST {{baseUrl}}/api/billing
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "retailerId": "{{retailerId}}",
+  "shopName": "Tech World",
+  "ownerName": "Sanjay Mehta",
+  "mobile": "9955443322",
+  "city": "Ahmedabad",
+  "state": "Gujarat",
+  "deviceDetails": "Integration & Training Services",
+  "billingAmount": 25000.00,
+  "paymentMode": "NEFT",
+  "isRebilling": false
+}
+
+###
+
+### Get All Billings
+GET {{baseUrl}}/api/billing
+Authorization: Bearer {{token}}
+
+###
+
+### Get Billing by ID
+GET {{baseUrl}}/api/billing/{{billingId}}
+Authorization: Bearer {{token}}
+
+###
+### DASHBOARD ENDPOINT
+###
+
+### Get Dashboard
+GET {{baseUrl}}/api/dashboard
+Authorization: Bearer {{token}}
+
+###

@@ -1,0 +1,121 @@
+####################################
+# Environment & Secrets
+####################################
+.env
+.env.*
+secrets.json
+appsettings.Development.json
+appsettings.Local.json
+
+####################################
+# User-specific files
+####################################
+*.rsuser
+*.suo
+*.user
+*.userprefs
+*.sln.docstates
+
+####################################
+# Visual Studio / VS Code
+####################################
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+####################################
+# Build outputs (All .NET projects)
+####################################
+**/bin/
+**/obj/
+artifacts/
+out/
+logs/
+*.log
+
+####################################
+# .NET
+####################################
+project.lock.json
+project.fragment.lock.json
+
+####################################
+# MAUI / Xamarin / Mobile
+####################################
+# Android
+**/android/bin/
+**/android/obj/
+*.apk
+*.aab
+*.keystore
+
+# iOS / Mac
+**/ios/bin/
+**/ios/obj/
+**/MacCatalyst/bin/
+**/MacCatalyst/obj/
+*.ipa
+*.xcarchive
+*.mobileprovision
+
+# Windows
+**/windows/bin/
+**/windows/obj/
+
+####################################
+# Blazor / Web
+####################################
+wwwroot/lib/
+wwwroot/dist/
+
+####################################
+# ASP.NET Core
+####################################
+ScaffoldingReadMe.txt
+PublishProfiles/
+*.publishsettings
+*.pubxml
+
+####################################
+# NuGet
+####################################
+**/packages/*
+!.nuget/packages/
+*.nupkg
+*.snupkg
+
+####################################
+# Logs & temp files
+####################################
+*.tmp
+*.temp
+*.cache
+*.pidb
+*.svclog
+
+####################################
+# OS-specific
+####################################
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+####################################
+# Testing
+####################################
+TestResults/
+*.trx
+coverage/
+coverage.*
+
+####################################
+# GitHub / CI
+####################################
+.github/workflows/*.log

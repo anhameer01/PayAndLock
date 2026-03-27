@@ -47,5 +47,38 @@ namespace PayAndLock_Backend.Controllers
             await _db.SaveChangesAsync();
             return Ok(new { message = "Billing created", id = dto.Id });
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Billing dto)
+        {
+            var billing = await _db.Billings.FindAsync(id);
+            if (billing == null) return NotFound();
+
+            billing.RetailerId = dto.RetailerId;
+            billing.ShopName = dto.ShopName;
+            billing.OwnerName = dto.OwnerName;
+            billing.Mobile = dto.Mobile;
+            billing.City = dto.City;
+            billing.State = dto.State;
+            billing.DeviceDetails = dto.DeviceDetails;
+            billing.BillingAmount = dto.BillingAmount;
+            billing.PaymentMode = dto.PaymentMode;
+            billing.BillingDate = dto.BillingDate;
+            billing.IsRebilling = dto.IsRebilling;
+
+            await _db.SaveChangesAsync();
+            return Ok(new { message = "Billing updated", id = billing.Id });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var billing = await _db.Billings.FindAsync(id);
+            if (billing == null) return NotFound();
+
+            _db.Billings.Remove(billing);
+            await _db.SaveChangesAsync();
+            return Ok(new { message = "Billing deleted", id });
+        }
     }
 }

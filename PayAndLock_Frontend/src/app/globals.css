@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4efe6;
+  --foreground: #122029;
+  --surface: rgba(255, 255, 255, 0.74);
+  --surface-strong: rgba(255, 255, 255, 0.9);
+  --stroke: rgba(18, 32, 41, 0.12);
+  --muted: #62727d;
+  --brand: #0f766e;
+  --brand-strong: #134e4a;
+  --accent: #f59e0b;
+  --danger: #b91c1c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
+    radial-gradient(circle at right 20%, rgba(245, 158, 11, 0.16), transparent 24%),
+    linear-gradient(180deg, #f8f3eb 0%, #f1ebe1 42%, #ece5d9 100%);
+}
+
+body {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0)),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(15, 118, 110, 0.22);
+}
+
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(22px);
+  border: 1px solid var(--stroke);
+  box-shadow: 0 28px 60px rgba(18, 32, 41, 0.08);
+}
+
+.glass-panel-strong {
+  background: var(--surface-strong);
+  backdrop-filter: blur(22px);
+  border: 1px solid rgba(18, 32, 41, 0.1);
+  box-shadow: 0 24px 48px rgba(18, 32, 41, 0.08);
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(18, 32, 41, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 32, 41, 0.04) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+.fade-up-delay {
+  animation: fade-up 0.9s ease-out both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

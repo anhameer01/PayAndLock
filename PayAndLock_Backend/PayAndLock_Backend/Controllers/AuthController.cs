@@ -26,8 +26,17 @@ namespace PayAndLock_Backend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
+            if (dto == null ||
+                string.IsNullOrWhiteSpace(dto.LoginId) ||
+                string.IsNullOrWhiteSpace(dto.Password))
+            {
+                return BadRequest(new { message = "Login ID and password are required" });
+            }
+
+            var loginId = dto.LoginId.Trim();
+
             var user = await _db.Users.FirstOrDefaultAsync(u =>
-                u.LoginId == dto.LoginId || u.Mobile == dto.LoginId);
+                u.LoginId == loginId || u.Mobile == loginId);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 return Unauthorized(new { message = "Invalid credentials" });
@@ -49,14 +58,23 @@ namespace PayAndLock_Backend.Controllers
         [HttpPost("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] LoginDto dto)
         {
-            var exists = await _db.Users.AnyAsync(u => u.LoginId == dto.LoginId);
+            if (dto == null ||
+                string.IsNullOrWhiteSpace(dto.LoginId) ||
+                string.IsNullOrWhiteSpace(dto.Password))
+            {
+                return BadRequest(new { message = "Login ID and password are required" });
+            }
+
+            var loginId = dto.LoginId.Trim();
+
+            var exists = await _db.Users.AnyAsync(u => u.LoginId == loginId || u.Mobile == loginId);
             if (exists) return BadRequest(new { message = "Admin already exists" });
 
             var admin = new User
             {
                 FullName = "Super Admin",
-                LoginId = dto.LoginId,
-                Mobile = dto.LoginId,
+                LoginId = loginId,
+                Mobile = loginId,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 Role = "SuperAdmin",
                 IsActive = true
@@ -69,8 +87,15 @@ namespace PayAndLock_Backend.Controllers
 
         private string GenerateToken(User user)
         {
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+            var jwtKey = _config["Jwt:Key"];
+            if (string.IsNullOrWhiteSpace(jwtKey))
+                throw new InvalidOperationException("JWT Key is missing in configuration");
+
+            var expiryValue = _config["Jwt:ExpiryHours"];
+            if (!double.TryParse(expiryValue, out var expiryHours))
+                throw new InvalidOperationException("JWT ExpiryHours is missing or invalid in configuration");
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -85,8 +110,7 @@ namespace PayAndLock_Backend.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(
-                    double.Parse(_config["Jwt:ExpiryHours"]!)),
+                expires: DateTime.UtcNow.AddHours(expiryHours),
                 signingCredentials: creds
             );
 

@@ -95,5 +95,69 @@ namespace PayAndLock_Backend.Controllers
 
             return Ok(new { total, data = visits });
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var visit = await _db.Visits
+                .Include(v => v.Employee)
+                .Where(v => v.Id == id)
+                .Select(v => new
+                {
+                    v.Id,
+                    v.ShopName,
+                    v.OwnerName,
+                    v.Mobile,
+                    v.AlternateMobile,
+                    v.Address,
+                    v.City,
+                    v.State,
+                    v.PhotoUrl,
+                    v.Remarks,
+                    v.SoldKey,
+                    v.Latitude,
+                    v.Longitude,
+                    v.VisitedAt,
+                    v.EmployeeId,
+                    EmployeeName = v.Employee != null ? v.Employee.FullName : ""
+                })
+                .FirstOrDefaultAsync();
+
+            if (visit == null) return NotFound();
+            return Ok(visit);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] CreateVisitDto dto)
+        {
+            var visit = await _db.Visits.FindAsync(id);
+            if (visit == null) return NotFound();
+
+            visit.ShopName = dto.ShopName;
+            visit.OwnerName = dto.OwnerName;
+            visit.Mobile = dto.Mobile;
+            visit.AlternateMobile = dto.AlternateMobile;
+            visit.Address = dto.Address;
+            visit.City = dto.City;
+            visit.State = dto.State;
+            visit.Remarks = dto.Remarks;
+            visit.SoldKey = dto.SoldKey;
+            visit.Latitude = dto.Latitude;
+            visit.Longitude = dto.Longitude;
+
+            await _db.SaveChangesAsync();
+            return Ok(new { message = "Visit updated", id = visit.Id });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var visit = await _db.Visits.FindAsync(id);
+            if (visit == null) return NotFound();
+
+            _db.Visits.Remove(visit);
+            await _db.SaveChangesAsync();
+            return Ok(new { message = "Visit deleted", id });
+        }
     }
 }

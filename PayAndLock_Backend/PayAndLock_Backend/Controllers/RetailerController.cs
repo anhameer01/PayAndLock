@@ -81,5 +81,16 @@ namespace PayAndLock_Backend.Controllers
             await _db.SaveChangesAsync();
             return Ok(new { message = "Updated" });
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var retailer = await _db.Retailers.FindAsync(id);
+            if (retailer == null) return NotFound();
+
+            _db.Retailers.Remove(retailer);
+            await _db.SaveChangesAsync();
+            return Ok(new { message = "Retailer deleted", id });
+        }
     }
 }
