@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PayAndLock_Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8bac96ae7d71fa27b93e45e22aec2572e42de5b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+46d415302057d41aef76abd99cceeca2855c2020")]
 [assembly: System.Reflection.AssemblyProductAttribute("PayAndLock_Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PayAndLock_Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

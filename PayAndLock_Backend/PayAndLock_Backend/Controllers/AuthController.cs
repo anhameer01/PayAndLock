@@ -67,8 +67,17 @@ namespace PayAndLock_Backend.Controllers
 
             var loginId = dto.LoginId.Trim();
 
-            var exists = await _db.Users.AnyAsync(u => u.LoginId == loginId || u.Mobile == loginId);
-            if (exists) return BadRequest(new { message = "Admin already exists" });
+            // Check if ADMIN already exists
+            var adminExists = await _db.Users.AnyAsync(u => u.Role == "SuperAdmin");
+            if (adminExists)
+                return BadRequest(new { message = "Admin already exists" });
+
+            // Check duplicate loginId/mobile
+            var duplicate = await _db.Users.AnyAsync(u =>
+                u.LoginId == loginId || u.Mobile == loginId);
+
+            if (duplicate)
+                return BadRequest(new { message = "LoginId or Mobile already exists" });
 
             var admin = new User
             {
@@ -82,6 +91,7 @@ namespace PayAndLock_Backend.Controllers
 
             _db.Users.Add(admin);
             await _db.SaveChangesAsync();
+
             return Ok(new { message = "Admin created successfully" });
         }
 
